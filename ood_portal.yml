@@ -235,7 +235,9 @@
 # Default: null (display error to user if mapping fails)
 #register_root: null
 
-host_regex: 'ood'
+host_regex: 'slurmctld|c(1|2)'
+node_uri: '/node'
+rnode_uri: '/rnode'
 auth:
  - 'AuthType Basic'
  - 'AuthName "private"'

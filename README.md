@@ -16,6 +16,12 @@ serves slurm 18.08.6
 $ docker build -t vanessa/slurm:18.08.6 .
 ```
 
+Then we build the nodes, which have additional VNC libraries:
+
+```bash
+$ docker-compose build
+```
+
 Then start te cluster:
 
 ```bash
@@ -107,6 +113,21 @@ And when it completes, it will turn green.
 
 ![img/job-completed.png](img/job-completed.png)
 
+
+## Interactive Apps
+
+The documentation said that I could add add apps to [ood-home/ondemand/dev](ood-home/ondemand/dev)
+and they would be available at `https://<hostname>/pun/dev/<app_directory>`. I tried
+this, and it didn't work. Notably, the user in the browser is ood, and
+so logically ood's home should work. Instead, I created an "apps" folder
+and then cloned the [Rstudio app]() there. It's bound to the container
+via Docker Compose, so it shows up in the interface, and seems usable:
+
+![img/rstudio.png](img/rstudio.png)
+
+It doesn't actually launch a job, so I'll need to look into how this actually
+works. I didn't install it as I should have, I just cloned the repository
+directly there.
 
 ## Cleaning Up
 

@@ -8,3 +8,19 @@ v2:
     adapter: "slurm"
     bin: "/usr/bin"
     conf: "/etc/slurm/slurm.conf"
+
+# This section is for interactive app
+# https://osc.github.io/ood-documentation/master/app-development/interactive/setup/modify-cluster-configuration.html
+  batch_connect:
+    basic:
+      script_wrapper: |
+        module purge
+        %s
+      set_host: "host=$(hostname -A | awk '{print $1}')"
+    vnc:
+      script_wrapper: |
+        module purge
+        export PATH="/opt/TurboVNC/bin:$PATH"
+        export WEBSOCKIFY_CMD="/usr/bin/websockify"
+        %s
+      set_host: "host=$(hostname -A | awk '{print $1}')"

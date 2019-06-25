@@ -1,0 +1,10 @@
+FROM vanessa/slurm:18.08.6
+
+# This container will be built on docker-compose up -d
+
+RUN yum install -y nc && \
+    wget https://turbovnc.org/pmwiki/uploads/Downloads/TurboVNC.repo && \
+    mv TurboVNC.repo /etc/yum.repos.d/ && \
+    yum install -y turbovnc && \
+    pip install websockify
+

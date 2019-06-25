@@ -36,9 +36,9 @@ services:
       - slurmdbd
     volumes:
       - ./example.yml:/etc/ood/config/clusters.d/example.yml
-      - ./ood_portal.yml:/etc/ood/config/ood_portal.yml
       - slurm_jobdir:/data
       - ./ood-home:/home/ood
+      - ./apps/RStudio:/var/www/ood/apps/sys/RStudio
     expose:
       - "6817"
     depends_on:
@@ -60,7 +60,9 @@ services:
       - "slurmctld"
 
   c1:
-    image: vanessa/slurm:18.08.6
+    build:
+      context: .
+      dockerfile: Dockerfile.node
     command: "slurmd"
     hostname: c1
     container_name: c1
@@ -72,7 +74,9 @@ services:
       - "slurmctld"
 
   c2:
-    image: vanessa/slurm:18.08.6
+    build:
+      context: .
+      dockerfile: Dockerfile.node
     command: "slurmd"
     hostname: c2
     container_name: c2

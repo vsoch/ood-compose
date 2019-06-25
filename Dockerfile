@@ -92,14 +92,15 @@ COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
 # Install Open On Demand
-RUN yum install -y epel-release centos-release-scl lsof sudo httpd24-mod_ssl httpd24-mod_ldap && \
+RUN yum install -y net-tools openssh-server openssh-clients && \
+    yum install -y epel-release centos-release-scl lsof sudo httpd24-mod_ssl httpd24-mod_ldap && \
     yum install -y https://yum.osc.edu/ondemand/latest/ondemand-release-web-latest-1-2.el7.noarch.rpm && \
-    yum install -y ondemand && \
+    yum install --nogpgcheck -y ondemand && \
     mkdir -p /etc/ood/config/clusters.d && \
     mkdir -p /etc/ood/config/apps/shell
 
-ADD ./ood_portal.yml /etc/ood/config/ood_portal.yml
-RUN /opt/ood/ood-portal-generator/sbin/update_ood_portal sqlite-devel && \
+COPY ./ood_portal.yml /etc/ood/config/ood_portal.yml
+RUN /opt/ood/ood-portal-generator/sbin/update_ood_portal && \
     systemctl enable httpd24-httpd && \
     groupadd ood && \
     useradd --create-home --gid ood ood && \
@@ -108,17 +109,3 @@ RUN /opt/ood/ood-portal-generator/sbin/update_ood_portal sqlite-devel && \
 
 COPY launch-httpd /usr/local/bin/
 CMD ["/usr/local/bin/launch-httpd"]
-
-#ENV container docker
-#RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
-#systemd-tmpfiles-setup.service ] || rm -f $i; done); \
-#rm -f /lib/systemd/system/multi-user.target.wants/*;\
-#rm -f /etc/systemd/system/*.wants/*;\
-#rm -f /lib/systemd/system/local-fs.target.wants/*; \
-#rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
-#rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
-#rm -f /lib/systemd/system/basic.target.wants/*;\
-#rm -f /lib/systemd/system/anaconda.target.wants/*;
-#VOLUME ["/sys/fs/cgroup"]
-#CMD ["/usr/sbin/init"]
-#CMD ["slurmdbd"]
