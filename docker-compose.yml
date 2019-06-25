@@ -22,7 +22,6 @@ services:
       - etc_munge:/etc/munge
       - etc_slurm:/etc/slurm
       - var_log_slurm:/var/log/slurm
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
     expose:
       - "6819"
     depends_on:
@@ -33,10 +32,6 @@ services:
     command: "slurmctld"
     container_name: slurmctld
     hostname: slurmctld
-    cap_add:
-      - SYS_ADMIN
-    security_opt:
-      - seccomp:unconfined
     volumes_from:
       - slurmdbd
     volumes:
@@ -60,6 +55,8 @@ services:
       - "8080"
       - "80"
     depends_on:
+      - "slurmctld"
+    links:
       - "slurmctld"
 
   c1:

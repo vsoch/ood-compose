@@ -25,16 +25,40 @@ $ docker-compose up -d
 Confirm that containers are running:
 
 ```bash
-  Name                 Command               State          Ports       
-------------------------------------------------------------------------
-c1          /usr/local/bin/docker-entr ...   Up      6818/tcp           
-c2          /usr/local/bin/docker-entr ...   Up      6818/tcp           
-mysql       docker-entrypoint.sh mysqld      Up      3306/tcp, 33060/tcp
-slurmctld   /usr/local/bin/docker-entr ...   Up      6817/tcp           
+  Name                 Command               State             Ports           
+-------------------------------------------------------------------------------
+c1          /usr/local/bin/docker-entr ...   Up      6818/tcp                  
+c2          /usr/local/bin/docker-entr ...   Up      6818/tcp                  
+mysql       docker-entrypoint.sh mysqld      Up      3306/tcp, 33060/tcp       
+ood         /usr/local/bin/docker-entr ...   Up      6817/tcp, 80/tcp, 8080/tcp
+slurmctld   /usr/local/bin/docker-entr ...   Up      6817/tcp                  
 slurmdbd    /usr/local/bin/docker-entr ...   Up      6819/tcp 
 ```
 
-Shell into the container with the controller (master node):
+## OnDemand Interface
+
+Currently, you can get the ip address for the on demand interface via the ood logs:
+
+```bash
+$ docker-compose logs ood
+Attaching to ood
+ood          | AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.19.0.7. Set the 'ServerName' directive globally to suppress this message
+```
+
+In the example above, we would go to `http://172.19.0.7` and see a login:
+
+![img/sign-in.png](img/sign-in.png)
+
+
+And then we would sign in to see the dashboard:
+
+![img/dashboard.png](img/dashboard.png)
+
+If you click on Jobs -> Active Jobs you will see the jobs interface.
+
+![img/jobs.png](img/jobs.png)
+
+At this point, we want to launch a job! Shell into the container with the controller (master node):
 
 ```bash
 $ docker exec -it slurmctld bash
@@ -61,19 +85,28 @@ $ cd /data
 And then submit a simple job.
 
 ```bash
-$ sbatch --wrap="uptime"
+$ sbatch --wrap="sleep 100"
 Submitted batch job 2
 ```
 
-The result file is now in the present working directory (`/data`):
+The result file will be in the present working directory (`/data`):
 
 ```bash
 $ ls
 slurm-2.out
-
-$ cat slurm-2.out
- 15:26:32 up 2 days, 23:48,  0 users,  load average: 1.20, 1.44, 1.65
 ```
+
+But more importantly, if you go to the onDemand interface, if you make sure that
+the "All Jobs" is selected (and not "Your Jobs") you should see a job running,
+via user root (the user you are in the Docker Container):
+
+![img/active-job.png](img/active-job.png)
+
+
+And when it completes, it will turn green.
+
+![img/job-completed.png](img/job-completed.png)
+
 
 ## Cleaning Up
 
@@ -102,16 +135,6 @@ When you want to delete the containers and really clean up:
 $ docker-compose stop
 $ docker-compose rm -f
 $ docker volume rm slurm-docker-cluster_etc_munge slurm-docker-cluster_etc_slurm slurm-docker-cluster_slurm_jobdir slurm-docker-cluster_var_lib_mysql slurm-docker-cluster_var_log_slurm
-```
-
-## OOD Interface
-
-Currently, you can get the ip address for OOD via
-
-```bash
-$ docker-compose logs ood
-Attaching to ood
-ood          | AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.19.0.7. Set the 'ServerName' directive globally to suppress this message
 ```
 
 And then open to that address to log in with `ood` and `ood` to see the interface.

@@ -13,7 +13,7 @@
 # Example:
 #     servername: 'www.example.com'
 # Default: null (don't use name-based Virtual Host)
-#servername: null
+# servername: ood
 
 # The port specification for the Virtual Host
 # Example:
@@ -235,7 +235,7 @@
 # Default: null (display error to user if mapping fails)
 #register_root: null
 
-host_regex: 'slurmctld'
+host_regex: 'ood'
 auth:
  - 'AuthType Basic'
  - 'AuthName "private"'

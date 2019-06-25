@@ -3,4 +3,5 @@
 set -e
 # Support changing environment variable options via docker run -e
 env > /etc/ood/config/apps/shell/env
+gosu munge /usr/sbin/munged
 /opt/rh/httpd24/root/usr/sbin/httpd-scl-wrapper -DFOREGROUND
