@@ -8,3 +8,7 @@ RUN yum install -y nc && \
     yum install -y turbovnc && \
     pip install websockify
 
+
+# Install for Rstudio App
+COPY apps/RStudio/install-compute-dependencies.sh /install-rstudio.sh
+RUN /bin/bash /install-rstudio.sh

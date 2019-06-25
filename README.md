@@ -120,10 +120,21 @@ The documentation said that I could add add apps to [ood-home/ondemand/dev](ood-
 and they would be available at `https://<hostname>/pun/dev/<app_directory>`. I tried
 this, and it didn't work. Notably, the user in the browser is ood, and
 so logically ood's home should work. Instead, I created an "apps" folder
-and then cloned the [Rstudio app]() there. It's bound to the container
+and then cloned the Rstudio app there. It's bound to the container
 via Docker Compose, so it shows up in the interface, and seems usable:
 
 ![img/rstudio.png](img/rstudio.png)
+
+I also added the commands to install dependencies in the [Dockerfile.node](Dockerfile.node)
+
+**IMPORTANT** I think that this should be done with instances. I shouldn't need
+to be running any R/Rstudio servers directly.
+
+```bash
+# Install for Rstudio App
+COPY apps/RStudio/install-compute-dependencies.sh /install-rstudio.sh
+RUN /bin/bash /install-rstudio.sh
+```
 
 It doesn't actually launch a job, so I'll need to look into how this actually
 works. I didn't install it as I should have, I just cloned the repository
