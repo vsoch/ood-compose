@@ -122,7 +122,15 @@ and they would be available at `https://<hostname>/pun/dev/<app_directory>`. I t
 this, and it didn't work. Notably, the user in the browser is ood, and
 so logically ood's home should work. Instead, I created an "apps" folder
 and then cloned the Rstudio app there. It's bound to the container
-via Docker Compose, so it shows up in the interface, and seems usable:
+via a volume in the docker-compose.yml:
+
+```
+   - ./apps/RStudio:/var/www/ood/apps/sys/RStudio
+```
+
+And this is what you should do for any general app you want to use,
+test, or develop. Binding as a subfolder within the `/var/www/ood/apps/sys` folder 
+means that it will show up in the interface:
 
 ![img/rstudio.png](img/rstudio.png)
 
@@ -131,7 +139,7 @@ I also added the commands to install dependencies in the [Dockerfile.node](Docke
 **IMPORTANT** In order to run the Singularity container with rstudio,
 the node (`c[1-2]`) containers are run in privileged mode. If you don't want to
 use Singularity (and aren't comfortable with this) then remove the `privileged: true`
-lines from the Dockerfile, and remove the RStudio folder from apps.
+lines from the docker-compose.yml, and remove the RStudio folder from apps.
 If you do want to use Singularity and RStudio, you can launch an Interactive
 App to get the interface:
 
@@ -143,9 +151,9 @@ COPY apps/RStudio/install-compute-dependencies.sh /install-rstudio.sh
 RUN /bin/bash /install-rstudio.sh
 ```
 
-It doesn't actually launch a job, so I'll need to look into how this actually
-works. I didn't install it as I should have, I just cloned the repository
-directly there.
+I won't go into detail about how an app is structured, but most
+of it is fairly intuitive if you look in the folder. Otherwise,
+the OSC maintains good documentation for app development.
 
 ### Developing your Own Apps
 
