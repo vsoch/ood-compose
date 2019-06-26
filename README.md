@@ -16,7 +16,10 @@ serves slurm 18.08.6
 $ docker build -t vanessa/slurm:18.08.6 .
 ```
 
-Then we build the nodes, which have additional VNC libraries:
+It's also available on [Docker Hub](https://hub.docker.com/r/vanessa/slurm),
+but it's still useful for you to build on your own for the latest version.
+After this first build or pull, we then build the nodes, which have additional VNC libraries,
+and (if you have particular dependencies for apps) they are installed here:
 
 ```bash
 $ docker-compose build
@@ -143,6 +146,17 @@ RUN /bin/bash /install-rstudio.sh
 It doesn't actually launch a job, so I'll need to look into how this actually
 works. I didn't install it as I should have, I just cloned the repository
 directly there.
+
+### Developing your Own Apps
+
+This means that, if you are interested in developing an app, you might:
+
+ - start with a template from one of the examples [here](https://osc.github.io/ood-documentation/master/install-ihpc-apps.html)
+ - ensure that dependencies are added to [Dockerfile.node](Dockerfile.node) for the cluster nodes `c[1-2]` or [Dockerfile](Dockerfile) for the main image.
+ - remember to do `docker-compose build` and then completely remove old containers (`docker-compose stop` and `docker-compose rm`) and then bring them up again (`docker-compose up -d`).
+ - Start sessions via the interactive sessions tab in the dashboard, and then debug by looking at output logs in `ood-home/ondemand/data/sys/dashboard/batch_connect/sys/<application>/`.
+
+If you have any questions, or fixes to the current setup, please [open an issue](https://www.github.com/vsoch/ood-compose/issues).
 
 ## Cleaning Up
 
