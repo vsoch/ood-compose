@@ -111,8 +111,6 @@ via user root (the user you are in the Docker Container):
 
 And when it completes, it will turn green.
 
-![img/job-completed.png](img/job-completed.png)
-
 
 ## Interactive Apps
 
