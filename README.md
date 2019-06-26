@@ -25,7 +25,7 @@ and (if you have particular dependencies for apps) they are installed here:
 $ docker-compose build
 ```
 
-Then start te cluster:
+Then start the cluster:
 
 ```bash
 $ docker-compose up -d
