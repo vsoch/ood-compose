@@ -34,6 +34,9 @@ $ docker-compose up -d
 Confirm that containers are running:
 
 ```bash
+$ docker-compose ps
+```
+```bash
   Name                 Command               State             Ports           
 -------------------------------------------------------------------------------
 c1          /usr/local/bin/docker-entr ...   Up      6818/tcp                  
