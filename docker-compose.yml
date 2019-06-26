@@ -64,6 +64,7 @@ services:
       context: .
       dockerfile: Dockerfile.node
     command: "slurmd"
+    privileged: true
     hostname: c1
     container_name: c1
     volumes_from:
@@ -78,6 +79,7 @@ services:
       context: .
       dockerfile: Dockerfile.node
     command: "slurmd"
+    privileged: true
     hostname: c2
     container_name: c2
     volumes_from:

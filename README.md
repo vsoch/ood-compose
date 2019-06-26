@@ -127,8 +127,14 @@ via Docker Compose, so it shows up in the interface, and seems usable:
 
 I also added the commands to install dependencies in the [Dockerfile.node](Dockerfile.node)
 
-**IMPORTANT** I think that this should be done with instances. I shouldn't need
-to be running any R/Rstudio servers directly.
+**IMPORTANT** In order to run the Singularity container with rstudio,
+the node (`c[1-2]`) containers are run in privileged mode. If you don't want to
+use Singularity (and aren't comfortable with this) then remove the `privileged: true`
+lines from the Dockerfile, and remove the RStudio folder from apps.
+If you do want to use Singularity and RStudio, you can launch an Interactive
+App to get the interface:
+
+![img/rstudio-running.png](img/rstudio-running.png)
 
 ```bash
 # Install for Rstudio App

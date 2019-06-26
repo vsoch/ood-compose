@@ -14,7 +14,6 @@ v2:
   batch_connect:
     basic:
       script_wrapper: |
-        module purge
         %s
       set_host: "host=$(hostname -A | awk '{print $1}')"
     vnc:

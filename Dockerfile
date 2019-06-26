@@ -91,8 +91,8 @@ COPY slurmdbd.conf /etc/slurm/slurmdbd.conf
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
-# Install Open On Demand
-RUN yum install -y net-tools openssh-server openssh-clients && \
+# Install Open On Demand, Singularity
+RUN yum install -y net-tools openssh-server openssh-clients singularity && \
     yum install -y epel-release centos-release-scl lsof sudo httpd24-mod_ssl httpd24-mod_ldap && \
     yum install -y https://yum.osc.edu/ondemand/latest/ondemand-release-web-latest-1-2.el7.noarch.rpm && \
     yum install --nogpgcheck -y ondemand && \
