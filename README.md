@@ -1,5 +1,8 @@
 # Open On Demand Compose
 
+> This repo is for demonstration purposes only.  This is not production ready. For the official Open OnDemand documentation please navigate to https://osc.github.io/ood-documentation/latest/index.html
+
+
 This is an Open On Demand (OOD) instance installed with SLURM using docker-compose.
 We use docker-compose to bring up a master node, worker nodes, and we store
 data and log files in a mounted volume. The slurm configuration was adopted
