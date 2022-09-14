@@ -1,6 +1,6 @@
 # Open On Demand Compose
 
-> Open OnDemand Compose is a containerized solution that doesn’t out of the box interface with system level resources.  The references to Open OnDemand may be out-dated in some cases.  For the official Open OnDemand documentation please navigate to https://osc.github.io/ood-documentation/latest/index.html
+> This repo is for demonstration purposes only.  This is not production ready. For the official Open OnDemand documentation please navigate to https://osc.github.io/ood-documentation/latest/index.html
 
 
 This is an Open On Demand (OOD) instance installed with SLURM using docker-compose.
